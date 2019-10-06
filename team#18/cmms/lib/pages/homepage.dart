@@ -255,22 +255,26 @@ class _HomePageState extends State<HomePage> {
                     for (int i = 0; i < snapshot.data.documents.length; i++) {
                       listTile.add(
                         ListTile(
-                          leading: Text(
-                            "${snapshot.data.documents[i].data["name"]}",
-                            textScaleFactor: 1.2,
-                            style: TextStyle(fontWeight: FontWeight.w700),
+                          leading: SizedBox(
+                            width: 60,
+                            child: Text(
+                              "${snapshot.data.documents[i].data["name"]}",
+                              textScaleFactor: 1.2,
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
                           ),
                           title: Text(
                               "Demand: ${snapshot.data.documents[i].data["demand"]}"),
                           subtitle: Text(
                               "Supply: ${snapshot.data.documents[i].data["supply"]}"),
                           trailing: Text(
-                              "Price per Quintal ${snapshot.data.documents[i].data["price"]}"),
+                              "Price per Q ${snapshot.data.documents[i].data["price"]}"),
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return MandiDetails(
+                                    i: i,
                                     snapshot: snapshot,
                                     user: widget.user,
                                   );
