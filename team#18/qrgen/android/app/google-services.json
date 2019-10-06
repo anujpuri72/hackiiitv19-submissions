@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "507519612700",
+    "firebase_url": "https://mandi-system.firebaseio.com",
+    "project_id": "mandi-system",
+    "storage_bucket": "mandi-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507519612700:android:49deb11892e2f5c3dbecd9",
+        "android_client_info": {
+          "package_name": "com.example.qrgen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507519612700-momgcbljqh9b4eh292eej4oca4efnp47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.qrgen",
+            "certificate_hash": "98dcdffc49c5ebbf334b6968a3de554990b46f86"
+          }
+        },
+        {
+          "client_id": "507519612700-h58300ehigc391t4odleh7k7rkes82ih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_RmUkxHoSkP1EhzyFprrTao4--wFy6io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507519612700-h58300ehigc391t4odleh7k7rkes82ih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507519612700:android:4ac811447b3c81fadbecd9",
+        "android_client_info": {
+          "package_name": "com.nahiapata.cmms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507519612700-p641ju1816i9qdtk7gr3rem18nt1ts1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nahiapata.cmms",
+            "certificate_hash": "b0d9da5b9a995d2ac0d08c78aadb3105670c9b76"
+          }
+        },
+        {
+          "client_id": "507519612700-l781kc2i4011psjhv2uklo776jcq4e24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nahiapata.cmms",
+            "certificate_hash": "98dcdffc49c5ebbf334b6968a3de554990b46f86"
+          }
+        },
+        {
+          "client_id": "507519612700-h58300ehigc391t4odleh7k7rkes82ih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_RmUkxHoSkP1EhzyFprrTao4--wFy6io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507519612700-h58300ehigc391t4odleh7k7rkes82ih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
