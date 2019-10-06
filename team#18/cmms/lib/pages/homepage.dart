@@ -243,11 +243,12 @@ class _HomePageState extends State<HomePage> {
                         child: Text("Error"),
                       );
                     } else {
-                      print("Accessing document: " +
-                          stateValue +
-                          "-" +
-                          districtValue);
-
+                      print(
+                        "Accessing document: " +
+                            stateValue +
+                            "-" +
+                            districtValue,
+                      );
 
                       // print(snapshot.data["mandis"].length);
                       // print(snapshot.data["mandis"][0]);
