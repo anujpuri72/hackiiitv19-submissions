@@ -29,67 +29,103 @@ class _RegisterState extends State<Register> {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: new AssetImage(
-                      'assets/images/wheat.png',
+                      'assets/images/finalogo.jpg',
                     ),
                   ),
                 ),
               ),
               Container(
-                margin: new EdgeInsets.fromLTRB(0, 80, 0, 80),
+                margin: new EdgeInsets.fromLTRB(0, 80, 0, 50),
                 alignment: Alignment.center,
                 child: Text(
-                  "Register as :",
+                  "WHO YOU ARE?",
                   style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  MaterialButton(
-                    child: Text(
-                      "Farmer",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    height: 70,
-                    minWidth: 150,
-                    color: Colors.green,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(27)),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 0,
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        height: 70.0,
+                        width: 70.0,
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new AssetImage(
+                              'assets/images/ficon.jpeg',
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => FarmerForm()),
-                      );
-                      ;
-                    },
+                      MaterialButton(
+                        child: Text(
+                          "Farmer",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        height: 50,
+                        minWidth: 150,
+                        color: Colors.green,
+                        shape: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(27)),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 0,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FarmerForm()),
+                          );
+                          ;
+                        },
+                      ),
+                    ],
                   ),
-                  MaterialButton(
-                    child: Text(
-                      "Trader",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    height: 70,
-                    minWidth: 150,
-                    color: Colors.green,
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(27)),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 0,
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        height: 70.0,
+                        width: 70.0,
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new AssetImage(
+                              'assets/images/ticon.png',
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => TraderForm()),
-                      );
-                      ;
-                    },
+                      MaterialButton(
+                        child: Text(
+                          "Trader",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        height: 50,
+                        minWidth: 150,
+                        color: Colors.green,
+                        shape: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(27)),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 0,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TraderForm()),
+                          );
+                          ;
+                        },
+                      ),
+                    ],
                   ),
                 ],
               )
