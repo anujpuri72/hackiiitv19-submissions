@@ -257,6 +257,7 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return MandiDetails(
+                                    docName: stateValue + "-" + districtValue,
                                     i: i,
                                     snapshot: snapshot,
                                     user: widget.user,

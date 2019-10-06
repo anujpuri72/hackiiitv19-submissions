@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cmms/utils/Mandi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -175,6 +176,14 @@ class _FarmerFormState extends State<FarmerForm> {
                           );
                         });
                         print("user: $user");
+                        await Mandi.pref
+                            .setString(Mandi.namePref, _nameController.text);
+                        await Mandi.pref
+                            .setString(Mandi.phonePref, _phoneController.text);
+                        await Mandi.pref.setString(Mandi.statePref, _state);
+                        await Mandi.pref
+                            .setString(Mandi.districtPref, _district);
+
                         await Firestore.instance
                             .collection("farmers")
                             .document(_phoneController.text)

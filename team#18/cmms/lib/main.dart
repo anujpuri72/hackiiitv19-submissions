@@ -1,7 +1,12 @@
+import 'package:cmms/utils/Mandi.dart';
 import 'package:cmms/utils/tools.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  Mandi.pref = await SharedPreferences.getInstance();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

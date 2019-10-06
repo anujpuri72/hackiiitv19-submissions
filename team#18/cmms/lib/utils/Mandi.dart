@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Mandi {
   //common strings
   static String appName = "Mandi";
@@ -12,5 +14,11 @@ class Mandi {
   static String error = "Some Error occured";
 
   //prefs
-  static String languagePref = "hindi";
+  static String languagePref = "languagePref";
+  static String namePref = "namePref";
+  static String phonePref = "phonePref";
+  static String districtPref = "districtPref";
+  static String statePref = "statePref";
+
+  static SharedPreferences pref;
 }

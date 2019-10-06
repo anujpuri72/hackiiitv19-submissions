@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmms/pages/register.dart';
 import 'package:cmms/utils/mandiScaffold.dart';
 import 'package:flutter/material.dart';
