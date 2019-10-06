@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<String> statesList = ["GJ"];
   List<String> districtList = ["ahmedabad", "gandhinagar", "himmatnagar"];
-  List<String> mandiList = ["sundar", "prayagraj"];
+  List<String> commodityList = ["sundar", "prayagraj"];
 
   String stateValue = "GJ";
   String districtValue = "gandhinagar";
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   String commodityValue = "jute";
 
   Future<QuerySnapshot> _mandiFuture;
-  Future<QuerySnapshot> _statesFuture;
+  Future<DocumentSnapshot> _statesFuture;
 
   List<Mandi> availableMandis;
 
@@ -33,7 +33,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _mandiFuture = Firestore.instance.collection("mandi").getDocuments();
-    _statesFuture = Firestore.instance.collection("states").getDocuments();
+    _statesFuture =
+        Firestore.instance.collection("states").document("data").get();
   }
 
   @override
@@ -47,10 +48,10 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.4,
-            child: FutureBuilder(
+            child: FutureBuilder<DocumentSnapshot>(
               future: _statesFuture,
               builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting ||
                     snapshot.connectionState == ConnectionState.none) {
                   return Center(
@@ -64,6 +65,19 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error Occured: ${snapshot.error}"),
                     );
                   } else {
+                    // print(snapshot.data.data["states"]);
+                    for (int i = 0;
+                        i < snapshot.data.data["states"].length;
+                        i++) {
+                      statesList.add(snapshot.data.data["states"][i]);
+                    }
+
+                    for (int i = 0;
+                        i < snapshot.data.data["commodities"].length;
+                        i++) {
+                      commodityList.add(snapshot.data.data["commodities"][i]);
+                    }
+
                     //   //this is where the magic happens
                     //   statesList = List<String>(snapshot.data.documents.length);
                     //   for (int i = 0; i < snapshot.data.documents.length; i++) {
