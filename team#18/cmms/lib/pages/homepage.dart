@@ -5,6 +5,8 @@ import 'package:cmms/utils/mandiScaffold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/services.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomePage extends StatefulWidget {
   final FirebaseUser user;
@@ -16,6 +18,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String id;
+
+  Future _scanqr() async {
+    try {
+      String result = await BarcodeScanner.scan();
+      setState(() {
+        id = result;
+        print("-------------------------------");
+      });
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          id = "camera permission denied";
+        });
+      } else {
+        setState(() {
+          id = "an error occured $e";
+        });
+      }
+    } on FormatException {
+      setState(() {
+        id = " back button pressed";
+      });
+    } catch (e) {
+      setState(() {
+        id = "an error occured $e";
+      });
+    }
+  }
+
   List<String> statesList; // = ["GJ", "UP"];
   List<String> districtList = ["ahmedabad", "gandhinagar", "himmatnagar"];
   List<String> mandiList; // = ["sundar", "prayagraj"];
@@ -43,6 +75,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MandiScaffold(
+      floatingButton: new FloatingActionButton.extended(
+        icon: Icon(Icons.camera),
+        label: Text("Scan me"),
+        onPressed: _scanqr,
+        tooltip: "scan code",
+      ),
       isClickable: true,
       title: "Home Page",
       body: Column(
