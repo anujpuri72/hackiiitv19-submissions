@@ -17,15 +17,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<String> statesList = ["GJ"];
   List<String> districtList = ["ahmedabad", "gandhinagar", "himmatnagar"];
-  List<String> commodityList = ["sundar", "prayagraj"];
+  List<String> mandiList = ["sundar", "prayagraj"];
+  List<String> commodityList = ["tomato", "onion"];
 
   String stateValue = "GJ";
   String districtValue = "gandhinagar";
   // String mandiValue = "prayagraj";
-  String commodityValue = "jute";
+  String commodityValue = "tomato";
 
   Future<QuerySnapshot> _mandiFuture;
   Future<DocumentSnapshot> _statesFuture;
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   List<Mandi> availableMandis;
 
@@ -96,7 +98,101 @@ class _HomePageState extends State<HomePage> {
                     //   //     i++) {
                     //   //     }
 
-                    return Container();
+                    return Form(
+                      key: _formKey,
+                      autovalidate: true,
+                      child: new ListView(
+                        children: <Widget>[
+                          new FormField(
+                            builder: (FormFieldState state) {
+                              return InputDecorator(
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.home),
+                                  labelText: 'State',
+                                ),
+                                isEmpty: stateValue == '',
+                                child: new DropdownButtonHideUnderline(
+                                  child: new DropdownButton(
+                                    value: stateValue,
+                                    isDense: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        stateValue = newValue;
+                                        state.didChange(newValue);
+                                      });
+                                    },
+                                    items: statesList.map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          new FormField(
+                            builder: (FormFieldState state) {
+                              return InputDecorator(
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.home),
+                                  labelText: 'Districts',
+                                ),
+                                isEmpty: districtValue == '',
+                                child: new DropdownButtonHideUnderline(
+                                  child: new DropdownButton(
+                                    value: districtValue,
+                                    isDense: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        districtValue = newValue;
+                                        state.didChange(newValue);
+                                      });
+                                    },
+                                    items: districtList.map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          new FormField(
+                            builder: (FormFieldState state) {
+                              return InputDecorator(
+                                decoration: InputDecoration(
+                                  icon: const Icon(Icons.home),
+                                  labelText: 'Comodities',
+                                ),
+                                isEmpty: commodityValue == '',
+                                child: new DropdownButtonHideUnderline(
+                                  child: new DropdownButton(
+                                    value: commodityValue,
+                                    isDense: true,
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        commodityValue = newValue;
+                                        state.didChange(newValue);
+                                      });
+                                    },
+                                    items: commodityList.map((String value) {
+                                      return new DropdownMenuItem(
+                                        value: value,
+                                        child: new Text(value),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 }
               },
