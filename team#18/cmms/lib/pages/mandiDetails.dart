@@ -52,7 +52,7 @@ class _MandiDetailsState extends State<MandiDetails> {
                   showCard("farmers"),
                   showCard("traders"),
                   showCard("price"),
-                  showCard("district"),
+                  showCard("mandi"),
                 ],
               ),
               SizedBox(
@@ -128,6 +128,7 @@ class _MandiDetailsState extends State<MandiDetails> {
                                   .updateData({
                                 "supply": FieldValue.increment(
                                     int.parse(_amountController.text)),
+                                "farmers": FieldValue.increment(1),
                               });
                               Navigator.of(context).pop();
                             },
