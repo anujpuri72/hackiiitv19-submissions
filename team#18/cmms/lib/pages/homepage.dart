@@ -15,10 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> statesList = ["GJ"];
+  List<String> statesList; // = ["GJ", "UP"];
   List<String> districtList = ["ahmedabad", "gandhinagar", "himmatnagar"];
-  List<String> mandiList = ["sundar", "prayagraj"];
-  List<String> commodityList = ["tomato", "onion"];
+  List<String> mandiList; // = ["sundar", "prayagraj"];
+  List<String> commodityList; // = ["tomato", "onion"];
 
   String stateValue = "GJ";
   String districtValue = "gandhinagar";
@@ -67,18 +67,33 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error Occured: ${snapshot.error}"),
                     );
                   } else {
-                    // print(snapshot.data.data["states"]);
+                    // print(snapshot.data.data["gandhinagar"]);
+                    statesList = List(snapshot.data.data["states"].length);
+                    districtList =
+                        List<String>(snapshot.data.data["GJ"].length);
+                    mandiList = List<String>(30);
+                    commodityList =
+                        List<String>(snapshot.data.data["commodities"].length);
+
                     for (int i = 0;
                         i < snapshot.data.data["states"].length;
                         i++) {
-                      statesList.add(snapshot.data.data["states"][i]);
+                      statesList[i] = snapshot.data.data["states"][i];
                     }
 
                     for (int i = 0;
                         i < snapshot.data.data["commodities"].length;
                         i++) {
-                      commodityList.add(snapshot.data.data["commodities"][i]);
+                      commodityList[i] = snapshot.data.data["commodities"][i];
                     }
+
+                    for (int i = 0; i < snapshot.data.data["GJ"].length; i++) {
+                      districtList[i] = snapshot.data.data["GJ"][i];
+                    }
+
+                    print("Values: ${statesList}");
+                    print("Values: ${commodityList}");
+                    print("Values: ${districtList}");
 
                     //   //this is where the magic happens
                     //   statesList = List<String>(snapshot.data.documents.length);
@@ -116,6 +131,15 @@ class _HomePageState extends State<HomePage> {
                                     value: stateValue,
                                     isDense: true,
                                     onChanged: (String newValue) {
+                                      // print(newValue);
+                                      for (int i = 0;
+                                          i <
+                                              snapshot
+                                                  .data.data[newValue].length;
+                                          i++) {
+                                        districtList[i] =
+                                            snapshot.data.data[newValue][i];
+                                      }
                                       setState(() {
                                         stateValue = newValue;
                                         state.didChange(newValue);
@@ -219,15 +243,11 @@ class _HomePageState extends State<HomePage> {
                         child: Text("Error"),
                       );
                     } else {
-                      // final mandi = Mandi();
-                      //     mandiFromJson(snapshot.data.data.toString());
                       print("Accessing document: " +
                           stateValue +
                           "-" +
                           districtValue);
 
-                      // Mandi.fromJson(Map.fromEntries(snapshot.data.data));
-                      Mandi.fromJson(snapshot.data.data);
 
                       // print(snapshot.data["mandis"].length);
                       // print(snapshot.data["mandis"][0]);
