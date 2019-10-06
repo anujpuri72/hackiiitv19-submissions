@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cmms/utils/mandiScaffold.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TraderForm extends StatefulWidget {
   @override
@@ -24,6 +27,22 @@ class _TraderFormState extends State<TraderForm> {
     'prayagraj',
   ];
   String _mandi = '';
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _firmController = TextEditingController();
+
+  FirebaseAuth _auth;
+  FirebaseUser user;
+  UserUpdateInfo userInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = FirebaseAuth.instance;
+    userInfo = UserUpdateInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MandiScaffold(
@@ -37,6 +56,7 @@ class _TraderFormState extends State<TraderForm> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
               new TextFormField(
+                controller: _nameController,
                 decoration: const InputDecoration(
                   icon: const Icon(Icons.person),
                   hintText: 'Enter your first and last name',
@@ -44,6 +64,7 @@ class _TraderFormState extends State<TraderForm> {
                 ),
               ),
               new TextFormField(
+                controller: _phoneController,
                 decoration: const InputDecoration(
                   icon: const Icon(Icons.phone),
                   hintText: 'Enter a phone number',
@@ -146,6 +167,7 @@ class _TraderFormState extends State<TraderForm> {
                 },
               ),
               new TextFormField(
+                controller: _firmController,
                 decoration: const InputDecoration(
                   icon: const Icon(Icons.local_offer),
                   hintText: 'Enter Firm name',
@@ -169,10 +191,58 @@ class _TraderFormState extends State<TraderForm> {
                       width: 0,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TraderForm()),
+                  onPressed: () async {
+                    await _auth.verifyPhoneNumber(
+                      phoneNumber: "+91" + _phoneController.text,
+                      codeSent: (String verficationID,
+                          [int resendcodeTimeout]) {
+                        print("Code Sent to device");
+                      },
+                      timeout: Duration(seconds: 30),
+                      verificationFailed: (AuthException exception) {
+                        print("Verification Failed: $exception");
+                        Fluttertoast.showToast(
+                          msg: "Verification Failed",
+                          backgroundColor: Colors.grey,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                      },
+                      verificationCompleted:
+                          (AuthCredential credentials) async {
+                        print("Phone Verification Complete");
+                        await _auth
+                            .signInWithCredential(credentials)
+                            .then((user) {
+                          // Navigator.of(context).pop();
+                          Fluttertoast.showToast(
+                            msg: "Succesfully Registered",
+                            backgroundColor: Colors.grey,
+                            gravity: ToastGravity.BOTTOM,
+                          );
+                        });
+                        print("user: $user");
+                        await Firestore.instance
+                            .collection("traders")
+                            .document(_phoneController.text)
+                            .setData({
+                          "firm": _firmController.text,
+                          "phone": _phoneController.text,
+                          "name": _nameController.text,
+                          "location": {
+                            "district": _district,
+                            "state": _state,
+                            "mandi": _mandi,
+                          }
+                        });
+                      },
+                      codeAutoRetrievalTimeout: (String verificaionID) {
+                        print("Timed out");
+                        Fluttertoast.showToast(
+                          msg: "Timed out. Try again",
+                          backgroundColor: Colors.grey,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                      },
                     );
                   },
                 ),

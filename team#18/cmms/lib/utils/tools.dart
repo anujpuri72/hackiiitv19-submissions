@@ -1,5 +1,5 @@
 import 'package:cmms/pages/homepage.dart';
-import 'package:cmms/pages/signIn.dart';
+import 'package:cmms/pages/register.dart';
 import 'package:cmms/pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +20,7 @@ class Tools {
               user: snapshot.data,
             );
           }
-          return SignIn();
+          return Register();
         }
       },
     );

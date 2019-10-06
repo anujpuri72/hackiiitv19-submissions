@@ -1,0 +1,39 @@
+{
+    mandisList: [sundar, pichai],
+    mandis: [{
+        district: gandhinagar,
+        name: sundar,
+        trader: 6,
+        commodities: [{
+            name: corn,
+            price_modal: 655,
+            price_min: 500,
+            demand: 100,
+            supply: 100,
+            price_max: 800
+        }, {
+            name: potato,
+            price_modal: 73,
+            price_min: 50,
+            demand: 600,
+            supply: 700,
+            price_max: 80
+        }],
+        farmer: 50,
+        state: GJ
+    }, {
+        commodity: [{
+            name: chilli,
+            price_modal: 56,
+            price_min: 50,
+            demand: 10,
+            supply: 8,
+            price_max: 80
+        }],
+        district: gandhinagar,
+        name: pichai,
+        trader: 2,
+        farmer: 10,
+        state: GJ
+    }]
+}
