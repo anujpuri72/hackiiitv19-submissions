@@ -29,7 +29,12 @@ class _MandiDetailsState extends State<MandiDetails> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             showCard("name"),
+            SizedBox(
+              height: 30,
+            ),
             Wrap(
+              runSpacing: 15,
+              spacing: 15,
               children: <Widget>[
                 showCard("demand"),
                 showCard("supply"),
@@ -37,8 +42,27 @@ class _MandiDetailsState extends State<MandiDetails> {
                 showCard("traders"),
                 showCard("price"),
                 showCard("district"),
-                showCard("name"),
               ],
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            MaterialButton(
+              child: Text(
+                "Book my Slot",
+                style: TextStyle(color: Colors.white),
+              ),
+              height: 40,
+              minWidth: 200,
+              color: Colors.green,
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(27)),
+                borderSide: BorderSide(
+                  color: Colors.white,
+                  width: 0,
+                ),
+              ),
+              onPressed: () {},
             ),
           ],
         ),
@@ -50,18 +74,20 @@ class _MandiDetailsState extends State<MandiDetails> {
     return SizedBox(
       height: 80,
       width: 160,
-      child: ListTile(
-        // elevation: 5,
-        title: Text(
-          "${widget.snapshot.data.documents[widget.i].data[parameter]}",
-          style: TextStyle(
-            fontSize: 24,
+      child: Card(
+        elevation: 7,
+        child: ListTile(
+          title: Text(
+            "${widget.snapshot.data.documents[widget.i].data[parameter]}",
+            style: TextStyle(
+              fontSize: 24,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        subtitle: Text(
-          parameter,
-          textAlign: TextAlign.center,
+          subtitle: Text(
+            parameter,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

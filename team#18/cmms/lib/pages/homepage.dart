@@ -26,6 +26,8 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         id = result;
         print("-------------------------------");
+        print(id);
+        print("-------------------------------");
       });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
@@ -48,14 +50,14 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  List<String> statesList; // = ["GJ", "UP"];
+  List<String> statesList;
   List<String> districtList = ["ahmedabad", "gandhinagar", "himmatnagar"];
-  List<String> mandiList; // = ["sundar", "prayagraj"];
-  List<String> commodityList; // = ["tomato", "onion"];
+  List<String> mandiList;
+  List<String> commodityList;
 
   String stateValue = "GJ";
   String districtValue = "gandhinagar";
-  // String mandiValue = "prayagraj";
+
   String commodityValue = "tomato";
 
   Future<QuerySnapshot> _mandiFuture;
@@ -106,7 +108,6 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error Occured: ${snapshot.error}"),
                     );
                   } else {
-                    // print(snapshot.data.data["gandhinagar"]);
                     statesList = List(snapshot.data.data["states"].length);
                     districtList =
                         List<String>(snapshot.data.data["GJ"].length);
@@ -130,28 +131,6 @@ class _HomePageState extends State<HomePage> {
                       districtList[i] = snapshot.data.data["GJ"][i];
                     }
 
-                    // print("Values: ${statesList}");
-                    // print("Values: ${commodityList}");
-                    // print("Values: ${districtList}");
-
-                    //   //this is where the magic happens
-                    //   statesList = List<String>(snapshot.data.documents.length);
-                    //   for (int i = 0; i < snapshot.data.documents.length; i++) {
-                    //     statesList[i] = snapshot.data.documents[i].documentID;
-                    //   }
-                    //   print(statesList);
-                    //   // print(snapshot.data.documents.length);
-                    //   // locations = Locations();
-                    //   print(snapshot.data.documents[0].data.length);
-                    //   print(snapshot.data.documents[0].data.keys.toList()[0]);
-                    //   districtList
-                    //       .addAll(snapshot.data.documents[0].data.keys.toList());
-                    //   print(districtList);
-                    //   // for (int i = 0;
-                    //   //     i < snapshot.data.documents[0].data.length;
-                    //   //     i++) {
-                    //   //     }
-
                     return Form(
                       key: _formKey,
                       autovalidate: true,
@@ -170,7 +149,6 @@ class _HomePageState extends State<HomePage> {
                                     value: stateValue,
                                     isDense: true,
                                     onChanged: (String newValue) {
-                                      // print(newValue);
                                       for (int i = 0;
                                           i <
                                               snapshot
@@ -224,35 +202,6 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           ),
-                          // new FormField(
-                          //   builder: (FormFieldState state) {
-                          //     return InputDecorator(
-                          //       decoration: InputDecoration(
-                          //         icon: const Icon(Icons.home),
-                          //         labelText: 'Comodities',
-                          //       ),
-                          //       isEmpty: commodityValue == '',
-                          //       child: new DropdownButtonHideUnderline(
-                          //         child: new DropdownButton(
-                          //           value: commodityValue,
-                          //           isDense: true,
-                          //           onChanged: (String newValue) {
-                          //             setState(() {
-                          //               commodityValue = newValue;
-                          //               state.didChange(newValue);
-                          //             });
-                          //           },
-                          //           items: commodityList.map((String value) {
-                          //             return new DropdownMenuItem(
-                          //               value: value,
-                          //               child: new Text(value),
-                          //             );
-                          //           }).toList(),
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
                         ],
                       ),
                     );
@@ -285,10 +234,6 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error"),
                     );
                   } else {
-                    // print(
-                    //   "Accessing document: " + stateValue + "-" + districtValue,
-                    // );
-                    // print("Data: ${snapshot.data.documents.length}");
                     List<ListTile> listTile = List();
                     for (int i = 0; i < snapshot.data.documents.length; i++) {
                       listTile.add(
@@ -326,101 +271,6 @@ class _HomePageState extends State<HomePage> {
                     return Column(
                       children: listTile,
                     );
-
-                    // return ListView.builder(
-                    //   itemBuilder: (context, i) {
-                    //     return ListTile(
-                    //       leading: Text("${snapshot.data.documents[i].data}"),
-                    //     );
-                    //   },
-                    // );
-
-                    // print(snapshot.data["mandis"].length);
-                    // print(snapshot.data["mandis"][0]);
-                    // print(snapshot.data["mandis"]);
-                    // for (int i = 0; i < snapshot.data["mandis"].length; i++) {
-                    // print("index $i  ${snapshot.data["mandis"][i]}");
-                    // for (int j = 0;
-                    //     j < snapshot.data["mandis"]["commodities"];
-                    //     j++) {}
-                    // print(
-                    //     "index $i  ${snapshot.data["mandis"][i]["commodities"]}");
-                    // print("index $i  ${snapshot.data.data}");
-                    // availableMandis[i].toJson();
-                    // print(mandi.mandis);
-                    // }
-
-                    // return Column(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     StreamBuilder(
-                    //       stream: Firestore.instance
-                    //           .collection("mandi")
-                    //           .document(stateValue + "-" + districtValue)
-                    //           .collection(snapshot.data["mandisList"][0])
-                    //           .snapshots(),
-                    //       builder: (context, snapshot) {
-                    //         if (snapshot.connectionState ==
-                    //                 ConnectionState.none ||
-                    //             snapshot.connectionState ==
-                    //                 ConnectionState.waiting) {
-                    //           return Center(
-                    //             child: SpinKitWanderingCubes(
-                    //               color: Colors.red,
-                    //             ),
-                    //           );
-                    //         } else {
-                    //           if (snapshot.hasError) {
-                    //             return Center(
-                    //               child: Text("Error"),
-                    //             );
-                    //           } else {
-                    //             return ListView.builder(
-                    //               itemBuilder: (context, i) {
-                    //                 return ListTile(
-                    //                   leading: Text("data"),
-                    //                   title: Text("Hello"),
-                    //                 );
-                    //               },
-                    //             );
-                    //           }
-                    //         }
-                    //       },
-                    //     ),
-                    //     StreamBuilder(
-                    //       stream: Firestore.instance
-                    //           .collection("mandi")
-                    //           .document(stateValue + "-" + districtValue)
-                    //           .collection(snapshot.data["mandisList"][1])
-                    //           .snapshots(),
-                    //       builder: (context, snapshot) {
-                    //         if (snapshot.connectionState ==
-                    //                 ConnectionState.none ||
-                    //             snapshot.connectionState ==
-                    //                 ConnectionState.waiting) {
-                    //           return Center(
-                    //             child: SpinKitWanderingCubes(
-                    //               color: Colors.red,
-                    //             ),
-                    //           );
-                    //         } else {
-                    //           if (snapshot.hasError) {
-                    //             return Center(
-                    //               child: Text("Error"),
-                    //             );
-                    //           } else {
-                    //             return ListView.builder(
-                    //               itemBuilder: (context, i) {
-                    //                 return ListTile();
-                    //               },
-                    //             );
-                    //           }
-                    //         }
-                    //       },
-                    //     ),
-                    //   ],
-                    // );
                   }
                 }
               },
@@ -430,43 +280,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  List<ListTile> giveListTiles({
-    @required snapshot,
-    @required String commodity,
-  }) {}
-
-  // List<TableRow> completetable(AsyncSnapshot<QuerySnapshot> snapshot) {
-  //   List<TableRow> row = List<TableRow>();
-  //   row.add(tableHeader());
-  //   for (int i = 0; i < 2; i++) {
-  //     // row.add(tableElements(snapshot));
-  //   }
-  //   return row;
-  // }
-
-  // TableRow tableHeader() {
-  //   return TableRow(
-  //     children: <Widget>[
-  //       Text("Mandi"),
-  //       Text("Commodity"),
-  //       Text("Price"),
-  //       Text("Supply"),
-  //       Text("Demand"),
-  //     ],
-  //   );
-  // }
-
-  // TableRow tableElements(AsyncSnapshot<DocumentSnapshot> snapshot) {
-  //   // print(snapshot.data.documentID);
-  //   return TableRow(
-  //     children: <Widget>[
-  //       Text("sundar"),
-  //       Text("${snapshot.data["name"]}"),
-  //       Text("${snapshot.data["price_modal"]}"),
-  //       Text("${snapshot.data["supply"]}"),
-  //       Text("${snapshot.data["demand"]}"),
-  //     ],
-  //   );
-  // }
 }
