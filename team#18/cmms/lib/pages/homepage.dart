@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmms/models/mandi.dart';
 import 'package:cmms/pages/mandiDetails.dart';
+import 'package:cmms/utils/Mandi.dart';
 import 'package:cmms/utils/mandiScaffold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +29,12 @@ class _HomePageState extends State<HomePage> {
         print(id);
         print("-------------------------------");
       });
+      await Firestore.instance
+          .collection("farmers")
+          .document(Mandi.pref.getString(Mandi.phonePref))
+          .collection("history")
+          .document()
+          .updateData({});
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -60,7 +66,6 @@ class _HomePageState extends State<HomePage> {
 
   String commodityValue = "tomato";
 
-  Future<QuerySnapshot> _mandiFuture;
   Future<DocumentSnapshot> _statesFuture;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
@@ -69,7 +74,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _mandiFuture = Firestore.instance.collection("mandi").getDocuments();
     _statesFuture =
         Firestore.instance.collection("states").document("data").get();
   }
@@ -136,71 +140,77 @@ class _HomePageState extends State<HomePage> {
                       autovalidate: true,
                       child: new ListView(
                         children: <Widget>[
-                          new FormField(
-                            builder: (FormFieldState state) {
-                              return InputDecorator(
-                                decoration: InputDecoration(
-                                  icon: const Icon(Icons.home),
-                                  labelText: 'State',
-                                ),
-                                isEmpty: stateValue == '',
-                                child: new DropdownButtonHideUnderline(
-                                  child: new DropdownButton(
-                                    value: stateValue,
-                                    isDense: true,
-                                    onChanged: (String newValue) {
-                                      for (int i = 0;
-                                          i <
-                                              snapshot
-                                                  .data.data[newValue].length;
-                                          i++) {
-                                        districtList[i] =
-                                            snapshot.data.data[newValue][i];
-                                      }
-                                      setState(() {
-                                        stateValue = newValue;
-                                        state.didChange(newValue);
-                                      });
-                                    },
-                                    items: statesList.map((String value) {
-                                      return new DropdownMenuItem(
-                                        value: value,
-                                        child: new Text(value),
-                                      );
-                                    }).toList(),
+                          Card(
+                            elevation: 5,
+                            child: new FormField(
+                              builder: (FormFieldState state) {
+                                return InputDecorator(
+                                  decoration: InputDecoration(
+                                    icon: const Icon(Icons.home),
+                                    labelText: 'State',
                                   ),
-                                ),
-                              );
-                            },
+                                  isEmpty: stateValue == '',
+                                  child: new DropdownButtonHideUnderline(
+                                    child: new DropdownButton(
+                                      value: stateValue,
+                                      isDense: true,
+                                      onChanged: (String newValue) {
+                                        for (int i = 0;
+                                            i <
+                                                snapshot
+                                                    .data.data[newValue].length;
+                                            i++) {
+                                          districtList[i] =
+                                              snapshot.data.data[newValue][i];
+                                        }
+                                        setState(() {
+                                          stateValue = newValue;
+                                          state.didChange(newValue);
+                                        });
+                                      },
+                                      items: statesList.map((String value) {
+                                        return new DropdownMenuItem(
+                                          value: value,
+                                          child: new Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                          new FormField(
-                            builder: (FormFieldState state) {
-                              return InputDecorator(
-                                decoration: InputDecoration(
-                                  icon: const Icon(Icons.home),
-                                  labelText: 'Districts',
-                                ),
-                                isEmpty: districtValue == '',
-                                child: new DropdownButtonHideUnderline(
-                                  child: new DropdownButton(
-                                    value: districtValue,
-                                    isDense: true,
-                                    onChanged: (String newValue) {
-                                      setState(() {
-                                        districtValue = newValue;
-                                        state.didChange(newValue);
-                                      });
-                                    },
-                                    items: districtList.map((String value) {
-                                      return new DropdownMenuItem(
-                                        value: value,
-                                        child: new Text(value),
-                                      );
-                                    }).toList(),
+                          Card(
+                            elevation: 5,
+                            child: new FormField(
+                              builder: (FormFieldState state) {
+                                return InputDecorator(
+                                  decoration: InputDecoration(
+                                    icon: const Icon(Icons.home),
+                                    labelText: 'Districts',
                                   ),
-                                ),
-                              );
-                            },
+                                  isEmpty: districtValue == '',
+                                  child: new DropdownButtonHideUnderline(
+                                    child: new DropdownButton(
+                                      value: districtValue,
+                                      isDense: true,
+                                      onChanged: (String newValue) {
+                                        setState(() {
+                                          districtValue = newValue;
+                                          state.didChange(newValue);
+                                        });
+                                      },
+                                      items: districtList.map((String value) {
+                                        return new DropdownMenuItem(
+                                          value: value,
+                                          child: new Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -234,38 +244,43 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error"),
                     );
                   } else {
-                    List<ListTile> listTile = List();
+                    print("Accessing ${stateValue + "-" + districtValue}");
+                    print("${snapshot.data.documents}");
+                    List<Widget> listTile = List();
                     for (int i = 0; i < snapshot.data.documents.length; i++) {
                       listTile.add(
-                        ListTile(
-                          leading: SizedBox(
-                            width: 60,
-                            child: Text(
-                              "${snapshot.data.documents[i].data["name"]}",
-                              textScaleFactor: 1.2,
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          title: Text(
-                              "Demand: ${snapshot.data.documents[i].data["demand"]}"),
-                          subtitle: Text(
-                              "Supply: ${snapshot.data.documents[i].data["supply"]}"),
-                          trailing: Text(
-                              "Price per Q ${snapshot.data.documents[i].data["price"]}"),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return MandiDetails(
-                                    docName: stateValue + "-" + districtValue,
-                                    i: i,
-                                    snapshot: snapshot,
-                                    user: widget.user,
-                                  );
-                                },
+                        Card(
+                          elevation: 4,
+                          child: ListTile(
+                            leading: SizedBox(
+                              width: 60,
+                              child: Text(
+                                "${snapshot.data.documents[i].data["name"]}",
+                                textScaleFactor: 1.2,
+                                style: TextStyle(fontWeight: FontWeight.w700),
                               ),
-                            );
-                          },
+                            ),
+                            title: Text(
+                                "Demand: ${snapshot.data.documents[i].data["demand"]}"),
+                            subtitle: Text(
+                                "Supply: ${snapshot.data.documents[i].data["supply"]}"),
+                            trailing: Text(
+                                "Price per Q ${snapshot.data.documents[i].data["price"]}"),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return MandiDetails(
+                                      docName: stateValue + "-" + districtValue,
+                                      i: i,
+                                      snapshot: snapshot,
+                                      user: widget.user,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     }

@@ -59,7 +59,7 @@ class _MandiScaffoldState extends State<MandiScaffold> {
             onPressed: () {
               print("Change Language");
             },
-          )
+          ),
         ],
       ),
       body: Padding(
