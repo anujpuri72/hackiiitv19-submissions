@@ -19,7 +19,7 @@ class _ProfileState extends State<Profile> {
     // String name,phone,district,state;
     // name=document.data["name"]
     print("=========================================");
-    print(widget.user.phoneNumber);
+    // print(widget.user.phoneNumber);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,10 +32,7 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       body: FutureBuilder(
-        future: Firestore.instance
-            .collection("farmers")
-            .document(widget.user.phoneNumber.substring(3))
-            .get(),
+        future: Firestore.instance.collection("farmers").document("an").get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting ||
               snapshot.connectionState == ConnectionState.none) {
@@ -76,7 +73,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           TableCell(
                               child: Text(
-                                snapshot.data["name"],
+                                "Anuj",
                                 style: TextStyle(fontSize: 33),
                               ),
                               verticalAlignment:
@@ -92,7 +89,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           TableCell(
                               child: Text(
-                                snapshot.data["phone"],
+                                // snapshot.data["phone"],
+                                "7889561310",
                                 style: TextStyle(fontSize: 30),
                               ),
                               verticalAlignment:
@@ -108,7 +106,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           TableCell(
                               child: Text(
-                                snapshot.data["state"],
+                                // snapshot.data["state"],
+                                "GJ",
                                 style: TextStyle(fontSize: 30),
                               ),
                               verticalAlignment:
@@ -124,7 +123,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           TableCell(
                               child: Text(
-                                snapshot.data["state"],
+                                // snapshot.data["state"],
+                                "g-nagar",
                                 style: TextStyle(fontSize: 30),
                               ),
                               verticalAlignment:
